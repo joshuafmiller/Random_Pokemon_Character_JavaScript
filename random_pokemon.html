@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript 201 Project</title>
+  </head>
+
+  <body>
+    <h1>Random Pokemon Character Generator!</h1>
+
+    <h3>
+      Press the button below to return a random Pokemon and some information
+      about it!
+    </h3>
+
+    <button id="button">Get Random Pokemon!</button>
+
+    <div id="name"></div>
+
+    <div id="type"></div>
+
+    <div id="weight"></div>
+
+    <script>
+      function randomNumber() {
+        //generate random number to build fetch request
+        let num = Math.ceil(Math.random() * 1009);
+        return num;
+      }
+
+      let type = document.getElementById("type");
+
+      document.getElementById("button").addEventListener("click", function () {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${randomNumber()}`) //get information from website
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            let pokemon = data;
+
+            let name = document.getElementById("name");
+            name.innerHTML = `Name: ${pokemon.name}`;
+            type.innerHTML = "";
+
+            function insertTypes() {
+              type.innerHTML += `<p>Type: ${pokemonType.type.name}</p>`;
+            }
+            let pokemonType = pokemon.types;
+            pokemonType.forEach(
+              (charType) =>
+                (type.innerHTML += `<p>Type: ${charType.type.name}</p>`)
+            );
+
+            let weight = document.getElementById("weight");
+            weight.innerHTML = `Weight: ${pokemon.weight}`;
+          });
+      });
+
+      document.querySelector("name");
+    </script>
+  </body>
+</html>
